@@ -34,3 +34,34 @@ if it is the first time the !play command has been played connect, if currently 
 The Queue isnt a queue, its a List. it makes it easier to modify it and use LINQ statements without casting.
 It simply does while(queue.Count > 0) with a custom implemented DeQueue function.
 
+Heres a list of all commands
+
+                !DALLE - 'prompt' - Returns an image based off the given prompt
+                
+                !Davinci 'prompt' - AI wisdom from Davinciv3
+                
+                !GPT 'prompt' - AI Wisdom from chat gpt (remembers message history)
+                
+                !ClearGPT - Clears your message history with ChatGPT
+                
+                /ping, ping the bot. 
+                
+                /time - Gives the time
+                
+                !play youtubelink plays a song from youtube 
+                
+                !search 'random message' will search youtube and return the top result
+                
+                !playsearch plays the last search 
+                
+                !skip - skips the current song
+                
+                !leave - if theres a bug, use this to reset your session.
+                
+                !queue / !Q - Shows the queue
+                
+                !clearQ / !clearqueue - clears the queue
+                
+                !remove n - n is a number, removes a song from the queue
+                
+                !swap n1 n2 - Swaps two songs position in the queue
