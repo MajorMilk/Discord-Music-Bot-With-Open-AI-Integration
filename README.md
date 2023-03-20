@@ -28,3 +28,5 @@ if it is the first time the !play command has been played connect, if currently 
 
 The Queue isnt a queue, its a List. it makes it easier to modify it and use LINQ statements without casting.
 It simply does while(queue.Count > 0) with a custom implemented DeQueue function.
+
+For the AI portion of the bot, its a pretty straight forward implementation of the Betalgo wrapper. Just a little more complicated than the examples.
