@@ -9,6 +9,36 @@ namespace DiscordBotV2.Modules
 {
     internal class MusicPrefixModule : ModuleBase
     {
+		public async Task<MemoryStream> CreateStream(Stream strean, CancellationToken token)
+        {
+            var memoryStream = new MemoryStream();
+            await Cli.Wrap("PATH-TO-FFMPEG")
+        .WithArguments(" -hide_banner -loglevel panic -i pipe:0 -ac 2 -f s16le -ar 48000 pipe:1")
+        .WithStandardInputPipe(PipeSource.FromStream(strean))
+        .WithStandardOutputPipe(PipeTarget.ToStream(memoryStream))
+        .ExecuteAsync(token);
+            return memoryStream;
+        }
+
+
+
+
+        public async Task SendAsync(IAudioClient client, VideoId vidId, CancellationToken token)
+        {
+            using (var audioStream = await Helpers.AudioStreamInfoAsync(Context.Guild.Id, vidId, token))
+            {
+                using (var FFStream = await CreateStream(audioStream, token))
+                {
+                    using (var discord = client.CreatePCMStream(AudioApplication.Mixed))
+                    {
+                        try { await discord.WriteAsync(FFStream.ToArray(), 0, (int)FFStream.Length, token); }
+                        finally { await discord.FlushAsync(); }
+                    }
+                    FFStream.Dispose();
+                }
+            }
+        }
+		
 
         [Command("swap")]
         public async Task MoveSongAsync(int i, int j)
@@ -272,35 +302,7 @@ namespace DiscordBotV2.Modules
             }
         }
 
-        public async Task<MemoryStream> CreateStream(Stream strean, CancellationToken token)
-        {
-            var memoryStream = new MemoryStream();
-            await Cli.Wrap("PATH-TO-FFMPEG")
-        .WithArguments(" -hide_banner -loglevel panic -i pipe:0 -ac 2 -f s16le -ar 48000 pipe:1")
-        .WithStandardInputPipe(PipeSource.FromStream(strean))
-        .WithStandardOutputPipe(PipeTarget.ToStream(memoryStream))
-        .ExecuteAsync(token);
-            return memoryStream;
-        }
-
-
-
-
-        public async Task SendAsync(IAudioClient client, VideoId vidId, CancellationToken token)
-        {
-            using (var audioStream = await Helpers.AudioStreamInfoAsync(Context.Guild.Id, vidId, token))
-            {
-                using (var FFStream = await CreateStream(audioStream, token))
-                {
-                    using (var discord = client.CreatePCMStream(AudioApplication.Mixed))
-                    {
-                        try { await discord.WriteAsync(FFStream.ToArray(), 0, (int)FFStream.Length, token); }
-                        finally { await discord.FlushAsync(); }
-                    }
-                    FFStream.Dispose();
-                }
-            }
-        }
+        
 
         //Never used because its kinda pointless to have the bot just join out of no where and do nothing
         public async Task JoinAsync()
