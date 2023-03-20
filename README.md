@@ -12,9 +12,11 @@ For the AI portion of the bot, its a pretty straight forward implementation of t
 This bot also uses CliWrap to interface with FFMpeg.
 
 Microsoft.Extensions.DependecyInjeciton
+
 Microsoft.Extensions.Hosting
 
 opus
+
 sodium.Core
 
 
