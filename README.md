@@ -21,13 +21,13 @@ opus
 
 sodium.Core
 
-##Update: 
+## Update: 
 
 I've changed from prefix commands to slash commands for music, AI commands remain prefix commands because I was having some weirdness with the delay invovled in getting a response from OpenAI
 
 I've also stopped just replying to everything with plain-text and started using the EmbedBuilder and ephemeral responses. Theres also a new prefix command !ClearBotMessages that is admin only.
 
-###With all that said this is how it works
+### With all that said this is how it works
 
 Joining and leaving is handled automatically, with only one instance being allowed in the server at a time.
 
