@@ -1,6 +1,8 @@
 # Discord-Music-Bot-With-Open-AI-Integration
 A music bot made with Discord.NET 3.9, YoutubeExplode, and Betalgo.OpenAI.GPT3
 
+Because of a change made by discord to the way they handle packets this bots music functionality is broken ATM, theres already a fix in the Discord.NET Dev build, but not for the nuget. If you're having problems this is why.
+
 this program uses FFMpeg without it, the music part of this music bot wont work. you'll need to provide a path to your exe. 
 you need to place the path in the CreateStream function in the MusicPrefixModule at the top of the class.
 
