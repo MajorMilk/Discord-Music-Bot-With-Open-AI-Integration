@@ -19,22 +19,5 @@ namespace DiscordMusicBot.Modules
             await RespondAsync(time);
         }
 
-
-
-
-        
-
-
-
-
-
-
-        /*[SlashCommand("sqrt", "Returns the square root of a number")]
-        public Task SqrtCommand(
-            [Option("Num", "The number you want the square root of")] double num)
-        {
-
-        }*/
-
     }
 }

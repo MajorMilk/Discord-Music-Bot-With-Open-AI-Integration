@@ -139,7 +139,7 @@ namespace DiscordMusicBot.Modules
             int it = 1;
             foreach (var item in l)
             {
-                t += $"{it++}: " + item.songname + $"({item.Url})" + " - Requested by: " + item.User.Username + '\n';
+                t += $"{it++}: " +  $"[{item.songname}]({item.Url})" + " - Requested by: " + item.User.Username + '\n';
             }
             if (t.Length > 0)
             {
