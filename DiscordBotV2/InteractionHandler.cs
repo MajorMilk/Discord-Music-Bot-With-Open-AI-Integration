@@ -3,7 +3,7 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using System.Reflection;
 
-namespace DiscordBot
+namespace DiscordMusicBot
 {
     public class InteractionHandler
     {

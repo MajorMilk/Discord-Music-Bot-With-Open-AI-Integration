@@ -1,7 +1,7 @@
 ﻿using Discord.Commands;
 using OpenAI.GPT3.ObjectModels.RequestModels;
 
-namespace DiscordBotV2.Modules
+namespace DiscordMusicBot.Modules
 {
     internal class AIPrefixModule : ModuleBase
     {

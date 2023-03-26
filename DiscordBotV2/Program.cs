@@ -2,14 +2,12 @@
 using Discord.Commands;
 using Discord.Interactions;
 using Discord.WebSocket;
-using DiscordBot;
-using DiscordBot.Modules;
-using DiscordBotV2.Modules;
-using DiscordBotV2.ServerInstance;
+using DiscordMusicBot.Modules;
+using DiscordMusicBot.ServerInstance;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DiscordBotV2
+namespace DiscordMusicBot
 {
     public class Program
     {
@@ -35,7 +33,7 @@ namespace DiscordBotV2
                 .AddSingleton(x => new CommandService())
                 .AddSingleton<PrefixHandler>()
                 .AddSingleton<ServerModule>()
-                .AddSingleton<MusicPrefixModule>()
+                .AddSingleton<MusicModule>()
                 .AddSingleton<AIPrefixModule>()
                 )
                 .Build();
@@ -56,7 +54,6 @@ namespace DiscordBotV2
             await provider.GetRequiredService<InteractionHandler>().InitializeAsync();
             var pCommands = provider.GetRequiredService<PrefixHandler>();
             pCommands.AddModule<PrefixModule>();
-            pCommands.AddModule<MusicPrefixModule>();
             pCommands.AddModule<AIPrefixModule>();
 
             await pCommands.InitializeAsync();

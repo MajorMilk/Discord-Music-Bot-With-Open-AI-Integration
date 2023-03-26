@@ -1,9 +1,9 @@
 ﻿using Discord;
 using YoutubeExplode.Videos;
 
-namespace DiscordBotV2
+namespace DiscordMusicBot
 {
-    public class SongQueueItem
+    public struct SongQueueItem
     {
         public string Url { get; set; } = "";
 
@@ -17,6 +17,8 @@ namespace DiscordBotV2
         public string songname { get; set; } = "";
 
         public IUser? User { get; set; }
+
+        public EmbedBuilder? EmbedMessage { get; set; }
 
 
         public SongQueueItem()

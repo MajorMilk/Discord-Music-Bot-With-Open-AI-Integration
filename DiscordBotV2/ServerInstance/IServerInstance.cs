@@ -1,7 +1,7 @@
 ﻿using Discord.Audio;
 using YoutubeExplode;
 
-namespace DiscordBotV2.ServerInstance
+namespace DiscordMusicBot.ServerInstance
 {
     public interface IServerInstance : IDisposable
     {

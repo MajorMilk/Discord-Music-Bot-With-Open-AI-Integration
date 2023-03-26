@@ -19,17 +19,22 @@ opus
 
 sodium.Core
 
+##Update: 
 
-With all that said this is how it works
+I've changed from prefix commands to slash commands for music, AI commands remain prefix commands because I was having some weirdness with the delay invovled in getting a response from OpenAI
+
+I've also stopped just replying to everything with plain-text and started using the EmbedBuilder and ephemeral responses. Theres also a new prefix command !ClearBotMessages that is admin only.
+
+###With all that said this is how it works
 
 Joining and leaving is handled automatically, with only one instance being allowed in the server at a time.
 
 GuildID's are linked to ServerModules, ServerModules store most of the data needed to play a song to an audio channel.
 The server modules are also responsible for storing chat history for the !GPT command.
 
-When a request is made with !play, the link is parsed and a SongQueueItem is made from the metadata
+When a request is made with /play, the link is parsed and a SongQueueItem is made from the metadata
 
-if it is the first time the !play command has been played connect, if currently playing, add to queue.
+if it is the first time the /play command has been played connect, if currently playing, add to queue.
 
 The Queue isnt a queue, its a List. it makes it easier to modify it and use LINQ statements without casting.
 It simply does while(queue.Count > 0) with a custom implemented DeQueue function.
@@ -48,20 +53,20 @@ Heres a list of all commands
                 
                 /time - Gives the time
                 
-                !play youtubelink plays a song from youtube 
+                /play youtubelink plays a song from youtube 
                 
-                !search 'random message' will search youtube and return the top result
+                /search 'random message' will search youtube and return the top result
                 
-                !playsearch plays the last search 
+                /playsearch plays the last search 
                 
-                !skip - skips the current song
+                /skip - skips the current song
                 
-                !leave - if theres a bug, use this to reset your session.
+                /leave - if theres a bug, use this to reset your session.
                 
-                !queue / !Q - Shows the queue
+                /queue / !Q - Shows the queue
                 
-                !clearQ / !clearqueue - clears the queue
+                /clearqueue / !clearqueue - clears the queue
                 
-                !remove n - n is a number, removes a song from the queue
+                /remove n - n is a number, removes a song from the queue
                 
-                !swap n1 n2 - Swaps two songs position in the queue
+                /swap n1 n2 - Swaps two songs position in the queue

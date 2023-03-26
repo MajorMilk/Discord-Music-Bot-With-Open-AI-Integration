@@ -2,7 +2,7 @@
 using OpenAI.GPT3.ObjectModels.RequestModels;
 using YoutubeExplode;
 
-namespace DiscordBotV2.ServerInstance
+namespace DiscordMusicBot.ServerInstance
 {
     public class ServerModule : IServerInstance
     {
@@ -70,14 +70,12 @@ namespace DiscordBotV2.ServerInstance
 
         public bool SkipSong()
         {
-            //If not playing anything
             if (AudioClient == null)
             {
 
                 return false;
             }
 
-            //DONT TOUCH - COMPLETE BLACK MAGIC
             ServerCancelToken.Cancel();
             ServerCancelToken.Dispose();
             ServerCancelToken = new();

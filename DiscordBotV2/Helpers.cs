@@ -1,4 +1,4 @@
-﻿using DiscordBotV2.ServerInstance;
+﻿using DiscordMusicBot.ServerInstance;
 using OpenAI.GPT3;
 using OpenAI.GPT3.Managers;
 using OpenAI.GPT3.ObjectModels;
@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
 
-namespace DiscordBotV2
+namespace DiscordMusicBot
 {
     public static class Helpers
     {
@@ -16,6 +16,7 @@ namespace DiscordBotV2
 
         public static bool IsValidYoutubeUrl(string videoUrl)
         {
+            //             11 alpha numeric chars including - and _ following ?:v= link might not be valid, its just an assumption
             Regex regex = new(@"(?:v=|\/)([a-zA-Z0-9_-]{11}).*");
             var match = regex.Match(videoUrl);
             return match.Success;
@@ -71,9 +72,12 @@ namespace DiscordBotV2
                 var completionResult = await gpt3.Completions.CreateCompletion(new CompletionCreateRequest()
                 {
                     Prompt = prompt,
+                    //Model = Models.CodeDavinciV2, //from what I understand this should be codex?
                     Model = Models.TextDavinciV3,
+                    //The higher this number, the more crazy(Random) chat gpt will be. 0.5 is a good number
                     Temperature = 0.5F,
-                    MaxTokens = 333
+                    //Davinci is cheap and can handle 1000 tokens
+                    MaxTokens = 1000
                 }) ;
                 GPTInUse = false;
                 if (completionResult.Successful)
@@ -87,7 +91,14 @@ namespace DiscordBotV2
             }
             return "The GPT Client is in Use";
         }
-
+        /// <summary>
+        /// Messages should consist of different messages formatted like this ChatMessage.FromSystem("Instructions") 
+        /// ChatMessage.FromAssistant("I understand") ChatMessage.FromUser("Hello") and ChatMessage.FromAssistant("Hello")
+        /// </summary>
+        /// <param name="messages"></param>
+        /// <param name="GuildID"></param>
+        /// <param name="AuthorID"></param>
+        /// <returns></returns>
         public static async Task<string> GPTAsync(List<ChatMessage> messages,ulong GuildID, ulong AuthorID)
         {
             if (!GPTInUse)
@@ -97,6 +108,8 @@ namespace DiscordBotV2
                 {
                     Messages = messages,
                     Model = Models.ChatGpt3_5Turbo,
+                    //Max tokens is 4k, i think its some kind of API limit, because of it, you'll never get more than 7 or so responses in the same thread
+                    //that is the purpose of clearing your chat history
                     MaxTokens = 1000
                 });
                 GPTInUse = false;
@@ -119,11 +132,6 @@ namespace DiscordBotV2
         {
             try
             {
-                if (!IsValidYoutubeUrl(videoUrl))
-                {
-                    return null;
-                }
-
                 var regex = new Regex(@"(?:v=|\/)([a-zA-Z0-9_-]{11}).*");
                 var match = regex.Match(videoUrl);
                 var videoId = match.Success ? match.Groups[1].Value : null;

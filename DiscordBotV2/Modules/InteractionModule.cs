@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Runtime.InteropServices;
 
-namespace DiscordBot.Modules
+namespace DiscordMusicBot.Modules
 {
     public class InteractionModule : InteractionModuleBase<SocketInteractionContext>
     {

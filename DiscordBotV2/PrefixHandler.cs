@@ -1,7 +1,7 @@
 ﻿using Discord.Commands;
 using Discord.WebSocket;
 
-namespace DiscordBot
+namespace DiscordMusicBot
 {
     public class PrefixHandler
     {
