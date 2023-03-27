@@ -21,7 +21,7 @@ sodium.Core
 
 ## Update: 
 
-Last pull, I put in a buffer to the write for audio, but upon discord.net being updated it reavealed that it didnt work. Now its all working though. 
+Last pull, I put in a buffer to the write for audio, but upon discord.net being updated it revealed that it didnt work. Now its all working though. 
 if you spot any bugs feel free to message me here: will#0493
 
 I've changed from prefix commands to slash commands for music, AI commands remain prefix commands because I was having some weirdness with the delay invovled in getting a response from OpenAI
