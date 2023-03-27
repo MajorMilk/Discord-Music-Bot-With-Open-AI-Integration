@@ -22,6 +22,7 @@ namespace DiscordMusicBot.Modules
             return memoryStream;
         }
 
+        //Big nope on reducing memory usage unfortunatley
         public async Task SendAsync(IAudioClient client, VideoId vidId, CancellationToken token)
         {
             using (var audioStream = await Helpers.AudioStreamInfoAsync(Context.Guild.Id, vidId, token))
@@ -30,21 +31,10 @@ namespace DiscordMusicBot.Modules
                 {
                     using (var discord = client.CreatePCMStream(AudioApplication.Mixed))
                     {
-                        try
-                        {
-                            //In the hopes that this will drastically reduce memory usage.
-                            //However will also result in more IO operations compared to copying the whole stream all at once
-                            byte[] buffer = new byte[81920];
-
-                            int bytesRead;
-                            //        From the ffmpeg stream copy to the buffer from 0 - length  -- streams keep track of their position by their nature as streams
-                            while ((bytesRead = await FFStream.ReadAsync(buffer, 0, buffer.Length, token)) > 0)
-                            {
-                                await discord.WriteAsync(buffer, 0, bytesRead, token);
-                            }
-                        }
+                        try { await discord.WriteAsync(FFStream.ToArray(), 0, (int)FFStream.Length, token); }
                         finally { await discord.FlushAsync(); }
                     }
+                    FFStream.Dispose();
                 }
             }
         }
@@ -247,10 +237,9 @@ namespace DiscordMusicBot.Modules
             }
             else
             {
-                await RespondAsync(embed:t.EmbedMessage.Build());
+                await RespondAsync(embed:t.EmbedMessage.Build(), ephemeral:true);
                 Server.AudioClient = await voiceChannel.ConnectAsync();
 
-                Console.WriteLine("Joined");
                 Server.QueueItems.Add(t);
 
                 while (Server.QueueItems.Count > 0)
@@ -270,7 +259,7 @@ namespace DiscordMusicBot.Modules
             if (Helpers.Servers.TryGetValue(GuildID, out var Server))
             {
                 var item = Server.DeQueue();
-                await ReplyAsync("Dequeued item");
+
                 Server.CurrentSong = item.Value.songname;
                 CancellationTokenSource token = Server.ServerCancelToken;
                 if (token == null || token.IsCancellationRequested)
